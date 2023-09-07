@@ -37,7 +37,8 @@ def get_bwin_token():
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     options.add_argument("--headless")
     options.add_argument("--disable-extensions")
-    driver = seleniumwire.webdriver.Chrome(sb.PATH_DRIVER, options=options)
+    #driver = seleniumwire.webdriver.Chrome(sb.PATH_DRIVER, options=options)
+    driver = seleniumwire.webdriver.Chrome(options=options)
     driver.get("https://sports.bwin.fr/fr/sports")
     for request in driver.requests:
         if request.response and "x-bwin-accessid=" in request.url:

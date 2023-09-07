@@ -6,6 +6,7 @@ import colorama
 import selenium
 import selenium.webdriver
 import selenium.common
+from selenium.webdriver.chrome.service import Service
 import stopit
 import termcolor
 
@@ -18,6 +19,8 @@ def start_selenium_aux(site):
     """
     Lancement d'un driver selenium
     """
+    
+    service = Service(executable_path=r'/usr/bin/chromedriver')
     options = selenium.webdriver.ChromeOptions()
     prefs = {'profile.managed_default_content_settings.images': 2,
              'disk-cache-size': 4096}
@@ -29,8 +32,10 @@ def start_selenium_aux(site):
     try:
         if site in DRIVER:
             return True
+        #DRIVER[site] = selenium.webdriver.Chrome(
+            #service=service, options=options)
         DRIVER[site] = selenium.webdriver.Chrome(
-            sb.PATH_DRIVER, options=options)
+            options=options)
         colorama.init()
         print(termcolor.colored('Driver started for {}{}'
                                 .format(site, colorama.Style.RESET_ALL),

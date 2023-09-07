@@ -14,6 +14,12 @@ import colorama
 from fake_useragent import UserAgent
 import termcolor
 
+#import to correct chromedriver issue
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+#from selenium.webdriver.chrome.service import Service
+
+SPORT_COMP = {}
 ALL_ODDS_COMBINE = {}
 ODDS = {}
 TEAMS_NOT_FOUND = []
@@ -28,10 +34,13 @@ INTERFACE = False
 IS_PARSING = False
 ABORT = False
 SPORTS = ["basketball", "football", "handball", "hockey-sur-glace", "rugby", "tennis"]
-PATH_DRIVER = ""
+PATH_DRIVER = None
 SELENIUM_SITES = {"joa"}
-DB_BOOKMAKERS = ["betclic", "betfair", "betway", "bwin", "france_pari", "joa", "netbet", "parionssport",
+DB_BOOKMAKERS_ALL = ["betclic", "betfair", "betway", "bwin", "france_pari", "joa", "netbet", "parionssport",
               "pasinobet", "pinnacle", "pmu", "pokerstars", "unibet", "winamax", "zebet"]
+DB_BOOKMAKERS_FR = ["betclic", "bwin", "france_pari", "joa", "netbet", "parionssport",
+              "pasinobet", "pinnacle", "pmu", "pokerstars", "unibet", "winamax", "zebet"]
+DB_BOOKMAKERS = DB_BOOKMAKERS_ALL
 BOOKMAKERS = sorted(DB_BOOKMAKERS + ["barrierebet", "vbet"])
 BOOKMAKERS_BOOST = sorted(BOOKMAKERS + ["unibet_boost"])
 TEST = False
@@ -86,9 +95,13 @@ def find_files(filename, search_path):
 chrome_version = ""
 colorama.init()
 try:
-    PATH_DRIVER = chromedriver_autoinstaller.install(True)
-    chrome_version = chromedriver_autoinstaller.get_chrome_version()
-    print("Chrome version :", chrome_version)
+    #PATH_DRIVER = webdriver.Chrome(ChromeDriverManager().install())
+    PATH_DRIVER = webdriver.Chrome()
+    chrome_version = PATH_DRIVER.capabilities['browserVersion']
+    print(chrome_version)
+
+    #PATH_DRIVER = chromedriver_autoinstaller.install(True)
+    #chrome_version = chromedriver_autoinstaller.get_chrome_version()
 except IndexError:
     PATH_DRIVER = find_files("chromedriver.exe", ".")
     print("Chrome version not found")
@@ -98,9 +111,13 @@ except IndexError:
 
 chromedriver_version = ""
 if sys.platform.startswith("win"):
-    chromedriver_version = PATH_DRIVER.split("\\")[-2]
+    #chromedriver_version = PATH_DRIVER.split("\\")[-2]
+    #chromedriver_version = webdriver.Chrome(executable_path=PATH_DRIVER)
+    chromedriver_version = PATH_DRIVER.capabilities['chrome']['chromedriverVersion'].split(' ')[0]
 else:
-    chromedriver_version = PATH_DRIVER.split("/")[-2]
+    #chromedriver_version = PATH_DRIVER.split("/")[-2]
+    #chromedriver_version = webdriver.Chrome(executable_path=PATH_DRIVER)
+    chromedriver_version = PATH_DRIVER.capabilities['chrome']['chromedriverVersion'].split(' ')[0]
 if chrome_version.split(".")[0] == chromedriver_version:
     print(termcolor.colored('Matching Chrome and chromedriver versions{}'
                             .format(colorama.Style.RESET_ALL),
@@ -135,4 +152,5 @@ with open(PATH_TRANSLATION, encoding='utf-8') as file:
     TRANSLATION = json.load(file)
 
 PATH_FONT = os.path.dirname(__file__) + "/resources/DejaVuSansMono.ttf"
+PATH_DRIVER.quit()
 

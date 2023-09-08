@@ -54,7 +54,9 @@ async def get_sport_id(sport_id: str):
     return outData
 
 ### Get a precise competitions match ###
-@app.get("/sport/competition/{competition_id}")
-async def get_comp_id(competition_id: str):
-    res = parse_competition("France - Ligue 1", competition_id)
+@app.get("/sport/{sport_id}/competition/{competition_id}")
+async def get_comp_id(sport_id: str, competition_id: str):
+    res = parse_competition(competition_id, sport_id)
+    print("Done done done")
+    print(res)
     return res

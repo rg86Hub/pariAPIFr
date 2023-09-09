@@ -40,7 +40,8 @@ DB_BOOKMAKERS_ALL = ["betclic", "betfair", "betway", "bwin", "france_pari", "joa
               "pasinobet", "pinnacle", "pmu", "pokerstars", "unibet", "winamax", "zebet"]
 DB_BOOKMAKERS_FR = ["betclic", "bwin", "france_pari", "joa", "netbet", "parionssport",
               "pasinobet", "pinnacle", "pmu", "pokerstars", "unibet", "winamax", "zebet"]
-DB_BOOKMAKERS = DB_BOOKMAKERS_ALL
+#DB_BOOKMAKERS = DB_BOOKMAKERS_ALL
+DB_BOOKMAKERS = DB_BOOKMAKERS_FR
 BOOKMAKERS = sorted(DB_BOOKMAKERS + ["barrierebet", "vbet"])
 BOOKMAKERS_BOOST = sorted(BOOKMAKERS + ["unibet_boost"])
 TEST = False

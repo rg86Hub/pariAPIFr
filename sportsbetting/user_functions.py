@@ -105,6 +105,7 @@ def parse_competitions_site(competitions, sport, site):
     return merge_dict_odds(list_odds)
 
 
+# Working
 def parse_competitions(competitions, sport, *sites):
     sites_order = ['betfair', 'joa', 'betway', 'pmu', 'barrierebet', 'pasinobet', 'vbet', 'france_pari', 'netbet', 'zebet',
                    'winamax', 'pinnacle', 'betclic', 'pokerstars', 'unibet', 'unibet_boost', 'bwin', 'parionssport']

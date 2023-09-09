@@ -11,12 +11,12 @@ import urllib.request
 
 from bs4 import BeautifulSoup
 
-import sportsbetting as sb
+
 from sportsbetting.auxiliary_functions import merge_dicts, truncate_datetime
 from sportsbetting.database_functions import is_player_in_db, add_player_to_db, is_player_added_in_db
 
 def parse_pmu(url=""):
-    """
+    """import sportsbetting as sb
     Retourne les cotes disponibles sur pmu
     """
     if "http" not in url:
@@ -67,8 +67,9 @@ def parse_pmu_html(soup):
                 is_rugby_13 = False
             if is_rugby_13 or live:
                 continue
-            series = "Séries" in line.find_parent("a")["title"]
-            competition = line.find_parent("a")["title"].split(" - ")[1]
+            if (line.find_parent("a")):
+                series = "Séries" in line.find_parent("a")["title"]
+                competition = line.find_parent("a")["title"].split(" - ")[1]
             handicap = False
             if "+" in string or "Egalité" in string:
                 handicap = True
